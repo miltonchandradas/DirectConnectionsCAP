@@ -1,0 +1,43 @@
+{
+    "name": "MyFullStack",
+    "version": "1.0.0",
+    "description": "Direct Connections - Innovator Challenge CAP Model",
+    "repository": "https://github.com/miltonchandradas/DirectConnectionsCAP.git",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap/cds": "^3",
+        "@sap/hana-client": "^2.5.86",
+        "@sap/hdbext": "^6.2.2",
+        "@sap/xsenv": "^3.0.0",
+        "bcryptjs": "^2.4.3",
+        "cookie-parser": "^1.4.5",
+        "cors": "^2.8.5",
+        "express": "^4",
+        "jsdoc": "^3.6.4",
+        "jsonwebtoken": "^8.5.1",
+        "morgan": "^1.10.0",
+        "node-geocoder": "^3.27.0",
+        "openrouteservice-js": "^0.1.9",
+        "passport": "^0.4.1",
+        "passport-facebook-token": "^4.0.0",
+        "sap-hdbext-promisfied": "^2.202004.1",
+        "sqlite3": "^4.2.0",
+        "uuid": "^8.2.0"
+    },
+    "scripts": {
+        "start": "npx cds run",
+        "express": "cds deploy --to hana && node srv/server",
+        "doc": "jsdoc -c jsdoc.json"
+    },
+    "engines": {
+        "node": "12.x"
+    },
+    "cds": {
+        "requires": {
+            "db": {
+                "kind": "hana"
+            }
+        }
+    }
+}

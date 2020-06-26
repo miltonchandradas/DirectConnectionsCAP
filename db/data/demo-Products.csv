@@ -1,0 +1,5 @@
+id;name;description;category;stock;price;discount;status;supplier_id
+1;Notebook Basic 15;Notebook Basic 15 with 2,80 GHz quad core, 15 LCD, 4 GB DDR3 RAM, 500 GB Hard Disc, Windows 10 Pro;Computer Systems;39;956.99;0.20;active;1001
+2;Notebook Basic 17;Notebook Basic 17 with 2,80 GHz quad core, 17 LCD, 4 GB DDR3 RAM, 500 GB Hard Disc, Windows 10 Pro;Computer Systems;75;899.00;0.10;inactive;1001
+3;Multi Color;1200 dpi x 1200 dpi - up to 25 ppm (mono) / up to 24 ppm (color)- capacity 80 sheets - scanner (216 x 297 mm, 2400dpi x 4800dpi, high resolution);Printers & Scanners;100;119;0;active;1002
+4;Beam Breaker B-1;720p, DLP Projector max. 8,45 Meter, 2D;TV, Video & HiFi;20;199;0.15;active;1003
