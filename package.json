@@ -11,8 +11,10 @@
         "@sap/hdbext": "^6.2.2",
         "@sap/xsenv": "^3.0.0",
         "bcryptjs": "^2.4.3",
+        "colors": "^1.4.0",
         "cookie-parser": "^1.4.5",
         "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
         "express": "^4",
         "jsdoc": "^3.6.4",
         "jsonwebtoken": "^8.5.1",
@@ -23,16 +25,25 @@
         "passport-facebook-token": "^4.0.0",
         "sap-hdbext-promisfied": "^2.202004.1",
         "sqlite3": "^4.2.0",
-        "uuid": "^8.2.0"
+        "swagger-jsdoc": "^4.0.0",
+        "swagger-ui-express": "^4.1.4",
+        "uuid": "^8.2.0",
+        "web-push": "^3.4.4"
     },
     "scripts": {
-        "start": "npx cds run",
-        "express": "cds deploy --to hana && node srv/server",
-        "doc": "jsdoc -c jsdoc.json"
+        "db": "npx cds run",
+        "start": "node srv/server",
+        "dev": "cds deploy --to hana && node srv/server",
+        "doc": "jsdoc -c jsdoc.json",
+        "middleware": "node srv/server"
     },
     "engines": {
         "node": "12.x"
     },
+    "devDependencies": {},
+    "files": [],
+    "main": "server.js",
+    "author": "Team 209",
     "cds": {
         "requires": {
             "db": {
