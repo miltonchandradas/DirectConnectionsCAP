@@ -1,0 +1,19 @@
+### Get All Opportunities
+GET {{url}}/api/v1/opportunities
+
+
+### POST Opportunity
+POST {{url}}/api/v1/opportunities
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "beneficiaryId": "c050990c-2167-496d-9f39-c911ac960af3",
+    "categoryId": 2,
+    "description": "description goes here...",
+    "startDate": "2020-07-25T00:00:00.000Z",
+    "endDate": "2020-07-25T00:00:00.000Z",
+    "estimatedHours": 2,
+    "additionalComments": "additional comments go here...",
+    "difficultyLevel": 3
+}

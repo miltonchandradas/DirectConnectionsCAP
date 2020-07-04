@@ -1,0 +1,140 @@
+### Get User
+GET {{url}}/api/v1/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMwNTA5OTBjLTIxNjctNDk2ZC05ZjM5LWM5MTFhYzk2MGFmMyIsImZpcnN0TmFtZSI6Ik1pbHRvbiIsImxhc3ROYW1lIjoiQ2hhbmRyYWRhcyIsImVtYWlsIjoibWlsdG9uQGxpdmUuY29tIiwiaWF0IjoxNTkzODYwNDc3LCJleHAiOjE1OTY0NTI0Nzd9.gPid0Cz96BR9V2MGPFWDjMVTvlUYcvJWp8QAAz7x2QE
+
+
+### Login User
+POST {{url}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+	"email": "milton@live.com",
+	"password": "123456"
+}
+
+
+### Register User 1
+POST {{url}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+	"firstName": "Milton",
+	"lastName": "Chandradas",
+	"email": "milton@live.com",
+	"password": "123456",
+	"address": "325 Swingline Ln, Milton GA 30004"
+}
+
+### Register User 2
+POST {{url}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+	"firstName": "Kevin",
+	"lastName": "Adams",
+	"email": "kevin@live.com",
+	"password": "123456",
+	"address": "8000 Avalon Blvd, Alpharetta GA 30004"
+}
+
+### Register User 3
+POST {{url}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+	"firstName": "Evan",
+	"lastName": "Schiele",
+	"email": "evan@live.com",
+	"password": "123456",
+	"address": "2950 Holcomb Bridge Rd, Alpharetta, GA 30022"
+}
+
+
+### Register User 4
+POST {{url}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+	"firstName": "Rachel",
+	"lastName": "Clemens",
+	"email": "rachel@live.com",
+	"password": "123456",
+	"address": "5210 Windward Pkwy, Alpharetta, GA 30004"
+}
+
+
+### Register User 5
+POST {{url}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+	"firstName": "Gurudatt",
+	"lastName": "Kashyapp",
+	"email": "gurudatt@live.com",
+	"password": "123456",
+	"address": "4025 North Point Pkwy, Alpharetta, GA 30022"
+}
+
+
+### Register User 6
+POST {{url}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+	"firstName": "Sundeep",
+	"lastName": "Shah",
+	"email": "sundeep@live.com",
+	"password": "123456",
+	"address": "5350 McGinnis Ferry Rd, Alpharetta, GA 30005"
+}
+
+
+### Register User 7
+POST {{url}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+	"firstName": "Mike",
+	"lastName": "Siebert",
+	"email": "mike@live.com",
+	"password": "123456",
+	"address": "10975 State Bridge Rd, Alpharetta, GA 30022"
+}
+
+
+### Register User 8
+POST {{url}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+	"firstName": "Harish",
+	"lastName": "Kumara",
+	"email": "harish@live.com",
+	"password": "123456",
+	"address": "12350 Arnold Mill Rd, Alpharetta, GA 30004"
+}
+
+### Register User 9
+POST {{url}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+	"firstName": "Jean",
+	"lastName": "Lauzon",
+	"email": "jean@live.com",
+	"password": "123456",
+	"address": "591 Holcomb Bridge Rd, Roswell, GA 30076"
+}
+
+
+### Register User 10
+POST {{url}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+	"firstName": "Antonia",
+	"lastName": "Zorn",
+	"email": "antonia@live.com",
+	"password": "123456",
+	"address": "5750 GA-9 N, Alpharetta, GA 30004"
+}

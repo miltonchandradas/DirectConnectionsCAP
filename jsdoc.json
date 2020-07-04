@@ -1,0 +1,16 @@
+{
+	"source": {
+		"include": ["srv/controllers"],
+		"includePattern": ".js$",
+		"excludePattern": "(node_modules/|docs|app|db|gen|localService)"
+	},
+	"plugins": ["plugins/markdown"],
+	"templates": {
+		"cleverLinks": true,
+		"monospaceLinks": true
+	},
+	"opts": {
+		"recurse": true,
+		"destination": "./srv/docs/"
+	}
+}

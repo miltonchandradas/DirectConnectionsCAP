@@ -33,14 +33,16 @@
     "scripts": {
         "db": "npx cds run",
         "start": "node srv/server",
-        "dev": "cds deploy --to hana && node srv/server",
+        "dev": "cds deploy --to hana && nodemon srv/server",
         "doc": "jsdoc -c jsdoc.json",
-        "middleware": "node srv/server"
+        "middleware": "nodemon srv/server"
     },
     "engines": {
         "node": "12.x"
     },
-    "devDependencies": {},
+    "devDependencies": {
+        "nodemon": "^2.0.4"
+    },
     "files": [],
     "main": "server.js",
     "author": "Team 209",

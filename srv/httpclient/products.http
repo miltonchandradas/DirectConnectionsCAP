@@ -1,0 +1,17 @@
+### GET All Products
+GET {{url}}/api/v1/products
+
+
+### POST Product
+POST {{url}}/api/v1/products
+Content-Type: application/json
+Authorization: Bearer {{Token}}
+
+{
+	"name": "27 inch monitor",
+	"description": "Brand new Samsung 27 inch 4k monitor",
+	"price": "free - but you would have to come and pick it up",
+	"comments": "I am handicapped and elderly.  And it would be great if you can help me with groceries in return...  Thanks !"
+}
+
+

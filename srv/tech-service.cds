@@ -6,4 +6,8 @@ service TechService {
     };
     entity Suppliers as select from demo.Suppliers;
 
+    entity Categories as select from demo.Category;
+
+    entity Opportunities as select from demo.Opportunity; 
+
 };

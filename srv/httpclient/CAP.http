@@ -1,0 +1,8 @@
+### GET All Products
+GET {{url}}/tech/Products
+
+### GET All Opportunities
+GET {{url}}/tech/Opportunities
+
+### GET All Categories
+GET {{url}}/tech/Categories

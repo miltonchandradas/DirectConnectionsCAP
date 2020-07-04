@@ -1,0 +1,17 @@
+### GET All Services
+GET {{url}}/api/v1/services
+
+
+### POST Service
+POST {{url}}/api/v1/services
+Content-Type: application/json
+Authorization: Bearer 
+
+{
+	"name": "27 inch monitor",
+	"description": "Brand new Samsung 27 inch 4k monitor",
+	"price": "free - but you would have to come and pick it up",
+	"comments": "I am handicapped and elderly.  And it would be great if you can help me with groceries in return...  Thanks !"
+}
+
+
