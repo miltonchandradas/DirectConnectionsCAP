@@ -4,8 +4,8 @@ GET {{url}}/api/v1/services
 
 ### POST Service
 POST {{url}}/api/v1/services
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMwNTA5OTBjLTIxNjctNDk2ZC05ZjM5LWM5MTFhYzk2MGFmMyIsImZpcnN0TmFtZSI6Ik1pbHRvbiIsImxhc3ROYW1lIjoiQ2hhbmRyYWRhcyIsImVtYWlsIjoibWlsdG9uQGxpdmUuY29tIiwiaWF0IjoxNTkzODYwNDc3LCJleHAiOjE1OTY0NTI0Nzd9.gPid0Cz96BR9V2MGPFWDjMVTvlUYcvJWp8QAAz7x2QE
 Content-Type: application/json
-Authorization: Bearer 
 
 {
 	"name": "27 inch monitor",

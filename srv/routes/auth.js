@@ -4,11 +4,13 @@ const passportConf = require("../middleware/passport");
 const router = express.Router();
 
 const {
-	getMe,
+    getMe,
+    getAllUsers,
 	register,
 	login,
 	logout,
-	facebook
+    facebook,
+    updateMe
 } = require("../controllers/auth");
 
 const {
@@ -17,7 +19,12 @@ const {
 
 router
 	.route("/me")
-	.get(protect, getMe);
+    .get(protect, getMe)
+    .put(protect, updateMe);
+
+router
+	.route("/users")
+    .get(protect, getAllUsers);
 
 router
 	.route("/register")

@@ -1,5 +1,4 @@
 const asyncHandler = require("../middleware/async");
-const ErrorResponse = require("../utils/errorResponse");
 const { v4: uuidv4 } = require("uuid");
 
 /**
@@ -15,12 +14,12 @@ const { v4: uuidv4 } = require("uuid");
  *        200:
  *          description: Get all services
  */
-exports.getServices = asyncHandler(async (req, res, next) => {
+exports.getServices = asyncHandler(async (req, res) => {
 
 	const dbClass = require("../utils/dbPromises");
 	let db = new dbClass(req.db);
 	
-	const sql = `SELECT * FROM "Service"`;
+	const sql = `SELECT * FROM "DEMO_SERVICE"`;
 	console.log(sql);
 	
 	const statement = await db.preparePromisified(sql);
@@ -52,7 +51,7 @@ exports.getServices = asyncHandler(async (req, res, next) => {
  *        200:
  *          description: Add new service
  */
-exports.addService = asyncHandler(async (req, res, next) => {
+exports.addService = asyncHandler(async (req, res) => {
 	
 	console.log(req.body);
     req.body.id = uuidv4();
@@ -63,12 +62,12 @@ exports.addService = asyncHandler(async (req, res, next) => {
 	const dbClass = require("../utils/dbPromises");
 	let db = new dbClass(req.db);
 	
-	const sql = `INSERT INTO "Service" VALUES (?)`;
+	const sql = `INSERT INTO "DEMO_SERVICES" VALUES (?)`;
 	console.log(sql);
 	
 	const statement = await db.preparePromisified(sql);
 	
-	const results = await db.statementExecPromisified(statement, [JSON.stringify(req.body)]);
+	await db.statementExecPromisified(statement, [JSON.stringify(req.body)]);
 	
 	res.status(201).json({success: true, message: "Successfully added service to database..."});
 	

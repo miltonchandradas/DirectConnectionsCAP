@@ -5,12 +5,12 @@ const { v4: uuidv4 } = require("uuid");
 // @desc	Get all products
 // @route	GET /api/v1/products
 // @access	Public
-exports.getProducts = asyncHandler(async (req, res, next) => {
+exports.getProducts = asyncHandler(async (req, res) => {
 
     const dbClass = require("../utils/dbPromises");
     let db = new dbClass(req.db);
 
-    const sql = `SELECT * FROM "Product"`;
+    const sql = `SELECT * FROM "DEMO_PRODUCT"`;
     console.log(sql);
 
     const statement = await db.preparePromisified(sql);
@@ -26,7 +26,7 @@ exports.getProducts = asyncHandler(async (req, res, next) => {
 // @desc	Add product
 // @route	POST /api/v1/products
 // @access	Private
-exports.addProduct = asyncHandler(async (req, res, next) => {
+exports.addProduct = asyncHandler(async (req, res) => {
 
     console.log(req.body);
     req.body.id = uuidv4();
@@ -34,12 +34,12 @@ exports.addProduct = asyncHandler(async (req, res, next) => {
     const dbClass = require("../utils/dbPromises");
     let db = new dbClass(req.db);
 
-    const sql = `INSERT INTO "Product" VALUES (?)`;
+    const sql = `INSERT INTO "DEMO_PRODUCTS" VALUES (?)`;
     console.log(sql);
 
     const statement = await db.preparePromisified(sql);
 
-    const results = await db.statementExecPromisified(statement, [JSON.stringify(req.body)]);
+    await db.statementExecPromisified(statement, [JSON.stringify(req.body)]);
 
     res.status(201).json({ success: true, message: "Successfully added product to database..." });
 

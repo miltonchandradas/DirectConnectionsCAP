@@ -2,6 +2,20 @@
 GET {{url}}/api/v1/auth/me
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMwNTA5OTBjLTIxNjctNDk2ZC05ZjM5LWM5MTFhYzk2MGFmMyIsImZpcnN0TmFtZSI6Ik1pbHRvbiIsImxhc3ROYW1lIjoiQ2hhbmRyYWRhcyIsImVtYWlsIjoibWlsdG9uQGxpdmUuY29tIiwiaWF0IjoxNTkzODYwNDc3LCJleHAiOjE1OTY0NTI0Nzd9.gPid0Cz96BR9V2MGPFWDjMVTvlUYcvJWp8QAAz7x2QE
 
+### Get All Users
+GET {{url}}/api/v1/auth/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMwNTA5OTBjLTIxNjctNDk2ZC05ZjM5LWM5MTFhYzk2MGFmMyIsImZpcnN0TmFtZSI6Ik1pbHRvbiIsImxhc3ROYW1lIjoiQ2hhbmRyYWRhcyIsImVtYWlsIjoibWlsdG9uQGxpdmUuY29tIiwiaWF0IjoxNTkzODYwNDc3LCJleHAiOjE1OTY0NTI0Nzd9.gPid0Cz96BR9V2MGPFWDjMVTvlUYcvJWp8QAAz7x2QE
+
+
+### Update User
+PUT {{url}}/api/v1/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMwNTA5OTBjLTIxNjctNDk2ZC05ZjM5LWM5MTFhYzk2MGFmMyIsImZpcnN0TmFtZSI6Ik1pbHRvbiIsImxhc3ROYW1lIjoiQ2hhbmRyYWRhcyIsImVtYWlsIjoibWlsdG9uQGxpdmUuY29tIiwiaWF0IjoxNTkzODYwNDc3LCJleHAiOjE1OTY0NTI0Nzd9.gPid0Cz96BR9V2MGPFWDjMVTvlUYcvJWp8QAAz7x2QE
+Content-Type: application/json
+
+{
+    "category": 1,
+    "address": "325 Swingline Ln, Milton GA 30004"
+}
 
 ### Login User
 POST {{url}}/api/v1/auth/login
