@@ -7,11 +7,18 @@ const { v4: uuidv4 } = require("uuid");
 // @access	Public
 exports.getProducts = asyncHandler(async (req, res) => {
 
+    const id = req.query.id;
+
     const dbClass = require("../utils/dbPromises");
     let db = new dbClass(req.db);
 
-    const sql = `SELECT * FROM "DEMO_PRODUCT"`;
-    console.log(sql);
+    let sql = "";
+
+    if (id) {
+        sql = `SELECT * FROM "TECHSERVICE_PRODUCTS" WHERE "PROVIDER_ID" = '${id}'`;
+    } else {
+        sql = `SELECT * FROM "TECHSERVICE_PRODUCTS"`;
+    }
 
     const statement = await db.preparePromisified(sql);
 

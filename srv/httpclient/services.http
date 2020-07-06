@@ -1,6 +1,9 @@
 ### GET All Services
 GET {{url}}/api/v1/services
 
+### GET All Services for user
+GET {{url}}/api/v1/services?id=72f46ac0-6a48-4a88-88e0-9bc618705972
+
 
 ### POST Service
 POST {{url}}/api/v1/services

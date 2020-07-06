@@ -15,7 +15,7 @@ exports.getOpportunities = asyncHandler(async (req, res) => {
 	const dbClass = require("../utils/dbPromises");
 	let db = new dbClass(req.db);
 	
-	const sql = `SELECT * FROM "DEMO_OPPORTUNITY"`;
+	const sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES"`;
 	console.log(sql);
 	
 	const statement = await db.preparePromisified(sql);

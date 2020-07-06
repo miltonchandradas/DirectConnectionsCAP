@@ -16,10 +16,19 @@ const { v4: uuidv4 } = require("uuid");
  */
 exports.getServices = asyncHandler(async (req, res) => {
 
+    const id = req.query.id;
+
 	const dbClass = require("../utils/dbPromises");
 	let db = new dbClass(req.db);
-	
-	const sql = `SELECT * FROM "DEMO_SERVICE"`;
+    
+    let sql = "";
+
+    if (id) {
+        sql = `SELECT * FROM "TECHSERVICE_SERVICES" WHERE "PROVIDER_ID" = '${id}'`;
+    } else {
+        sql = `SELECT * FROM "TECHSERVICE_SERVICES"`;
+    }
+
 	console.log(sql);
 	
 	const statement = await db.preparePromisified(sql);
