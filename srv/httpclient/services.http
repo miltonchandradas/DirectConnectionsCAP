@@ -18,3 +18,16 @@ Content-Type: application/json
 }
 
 
+### PUT Service
+PUT {{url}}/api/v1/services/b3776886-39f8-4b96-aa50-a76e83ad1cf4
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "providerId": "11539e8c-a4df-4337-8b9c-5c0474c854b4",
+    "beneficiaryId": "c518be09-08a7-41bb-a32d-690ed6e5046a",
+    "startDate": "2020-08-06T00:00:00.000Z",
+    "endDate": "2020-08-06T00:00:00.000Z",
+    "initiatedBy": "beneficiary"
+}
+

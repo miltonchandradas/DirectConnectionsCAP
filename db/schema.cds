@@ -13,27 +13,6 @@ type veryLongString1000 : String(1000);
 type sDate : DateTime;
 type fourdigitDecimal : Decimal(15, 4);
 
-/* entity Products {
-    key id          : Integer;
-        name        : String(100);
-        description : String(1000);
-        category    : String(100);
-        stock       : Integer;
-        price       : Decimal(6, 2);
-        discount    : Decimal(3, 2);
-        status      : String(100);
-        supplier    : Association to Suppliers;
-}
-
-entity Suppliers {
-    key id          : Integer;
-        name        : String(100);
-        contactName : String(100);
-        address     : Address;
-        products    : Association to many Products
-                          on products.supplier = $self;
-} */
-
 
 entity User {
     key id                  : mediumString50;
@@ -60,8 +39,7 @@ entity User {
                                   on activityBeneficiary.beneficiary = $self;
         serviceProvider     : Association to many Service
                                   on serviceProvider.provider = $self;
-        /* productProvider     : Association to many Product
-                                  on productProvider.provider = $self; */
+
 }
 
 
@@ -75,14 +53,14 @@ entity Category {
                           on opportunity.category = $self;
         service     : Association to many Service
                           on service.category = $self;
-        /* product     : Association to many Product
-                          on product.category = $self; */
+
 }
 
 
 entity Opportunity {
     key id                 : mediumString50;
         description        : veryLongString1000 not null;
+        state              : mediumString50 default 'pending';
         startDate          : sDate;
         endDate            : sDate;
         estimatedHours     : Integer;
@@ -97,6 +75,9 @@ entity Opportunity {
 entity Service {
     key id                 : mediumString50;
         description        : veryLongString1000 not null;
+        state              : mediumString50 default 'pending';
+        startDate: sDate;
+        endDate: sDate;
         estimatedHours     : Integer;
         additionalComments : veryLongString1000;
         difficultyLevel    : Integer default 2;
@@ -105,29 +86,18 @@ entity Service {
         category           : Association to Category;
 }
 
-/* entity Product {
-    key id                 : mediumString50;
-        description        : veryLongString1000 not null;
-        price              : Decimal(6, 3);
-        additionalComments : veryLongString1000;
-        discountLevel      : Integer default 2;
-        provider           : Association to User;
-        activity           : Association to Activity;
-        category           : Association to Category;
-} */
-
 
 entity Activity {
     key id           : mediumString50;
         activityDate : sDate;
+        initiatedBy  : mediumString50 default 'volunteer';
+        state        : mediumString50 default 'subscribed';
         isComplete   : Boolean default false;
         rating       : Integer default null;
         provider     : Association to User;
         beneficiary  : Association to User;
         opportunity  : Association to Opportunity;
         service      : Association to Service;
-        /* product      : Association to Product; */
-
 }
 
 entity CodeOfConduct {

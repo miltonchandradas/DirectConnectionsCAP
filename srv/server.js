@@ -49,7 +49,6 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 const auth = require("./routes/auth");
 const categories = require("./routes/categories");
-/* const products = require("./routes/products"); */
 const services = require("./routes/services");
 const opportunities = require("./routes/opportunities");
 const activities = require("./routes/activities");
@@ -88,7 +87,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/categories", categories);
-/* app.use("/api/v1/products", products); */
 app.use("/api/v1/services", services);
 app.use("/api/v1/opportunities", opportunities);
 app.use("/api/v1/activities", activities);

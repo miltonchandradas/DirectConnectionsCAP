@@ -60,3 +60,33 @@ exports.addActivity = asyncHandler(async (req, res) => {
 	res.status(201).json({success: true, message: "Successfully added activity to database..."});
 	
 });
+
+// @desc	Update activity
+// @route	POST /api/v1/activities
+// @access	Private
+exports.updateRating = asyncHandler(async (req, res) => {
+    
+    const {
+        rating
+    } = req.body;
+
+    console.log(req.body);
+
+    let activityId = req.params.id;
+    console.log("Activity ID: ", activityId);
+
+	const dbClass = require("../utils/dbPromises");
+	let db = new dbClass(req.db);
+	
+    const sql = `UPDATE "DEMO_ACTIVITY" 
+            SET "RATING" = ?
+            WHERE "ID" = '${activityId}'`;
+	console.log(sql);
+	
+	const statement = await db.preparePromisified(sql);
+	
+	await db.statementExecPromisified(statement, [rating]);
+	
+	res.status(201).json({success: true, message: "Successfully updated activity in database..."});
+	
+});

@@ -4,5 +4,6 @@
     "**/.git": true,
     "**/.vscode": true
 },
-"editor.autoSave": "on"
+"editor.autoSave": "on",
+"rest-client.certificates": {}
 }

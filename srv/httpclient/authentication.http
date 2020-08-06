@@ -1,15 +1,15 @@
 ### Get User
 GET {{url}}/api/v1/auth/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMwNTA5OTBjLTIxNjctNDk2ZC05ZjM5LWM5MTFhYzk2MGFmMyIsImZpcnN0TmFtZSI6Ik1pbHRvbiIsImxhc3ROYW1lIjoiQ2hhbmRyYWRhcyIsImVtYWlsIjoibWlsdG9uQGxpdmUuY29tIiwiaWF0IjoxNTkzODYwNDc3LCJleHAiOjE1OTY0NTI0Nzd9.gPid0Cz96BR9V2MGPFWDjMVTvlUYcvJWp8QAAz7x2QE
+Authorization: Bearer {{token}}
 
 ### Get All Users
 GET {{url}}/api/v1/auth/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ5MGJkYmE5LTlmZjYtNDUxYS1hNThhLWUzMDY0ZTQ3OTY5OCIsImZpcnN0TmFtZSI6Ik1pbHRvbiIsImxhc3ROYW1lIjoiQ2hhbmRyYWRhcyIsImVtYWlsIjoibWlsdG9uQGxpdmUuY29tIiwiaWF0IjoxNTk2Mjg0MDM5LCJleHAiOjE1OTg4NzYwMzl9.bHpWaBry664ATmmCbAGuCf6IVJFAfVVbeqw0bVYGFx0
+Authorization: Bearer {{token}}
 
 
 ### Update User
 PUT {{url}}/api/v1/auth/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMwNTA5OTBjLTIxNjctNDk2ZC05ZjM5LWM5MTFhYzk2MGFmMyIsImZpcnN0TmFtZSI6Ik1pbHRvbiIsImxhc3ROYW1lIjoiQ2hhbmRyYWRhcyIsImVtYWlsIjoibWlsdG9uQGxpdmUuY29tIiwiaWF0IjoxNTkzODYwNDc3LCJleHAiOjE1OTY0NTI0Nzd9.gPid0Cz96BR9V2MGPFWDjMVTvlUYcvJWp8QAAz7x2QE
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -44,9 +44,9 @@ POST {{url}}/api/v1/auth/register
 Content-Type: application/json
 
 {
-	"firstName": "Kevin",
-	"lastName": "Adams",
-	"email": "kevin@live.com",
+	"firstName": "Christoph",
+	"lastName": "Christophersen",
+	"email": "christoph@live.com",
 	"password": "123456",
 	"address": "8000 Avalon Blvd, Alpharetta GA 30004"
 }

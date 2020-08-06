@@ -13,48 +13,73 @@ const { v4: uuidv4 } = require("uuid");
  */
 exports.getOpportunities = asyncHandler(async (req, res) => {
 
-	const dbClass = require("../utils/dbPromises");
-	let db = new dbClass(req.db);
-	
-	const sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES"`;
-	console.log(sql);
-	
-	const statement = await db.preparePromisified(sql);
-	
-	const results = await db.statementExecPromisified(statement, []);
-	
-	res.status(200).json({success: true, data: results});
-			
+    const dbClass = require("../utils/dbPromises");
+    let db = new dbClass(req.db);
+
+    let active = req.query.active;
+    console.log("Active: ", active);
+
+    let sql = "";
+
+    if (active === true) {
+        sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES"`;
+    } else {
+        let today = moment().format('YYYY-MM-DD');
+        console.log("Today: ", today);
+
+        sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES" WHERE STARTDATE > '${today}'`;
+    }
+
+    console.log(sql);
+
+    const statement = await db.preparePromisified(sql);
+
+    const results = await db.statementExecPromisified(statement, []);
+
+    res.status(200).json({ success: true, data: results });
+
 });
 
-/**
- * @swagger
- * /api/v1/auth/categories:
- *    get:
- *      description: Get future volunteering categories
- *    responses:
- *      -  '200':
- *          description: Get future volunteering categories
- */
-exports.getFutureOpportunities = asyncHandler(async (req, res) => {
 
-	const dbClass = require("../utils/dbPromises");
+// @desc    Subscribe to opportunities
+// @route   PUT /api/v1/opportunities
+// @access  Private
+exports.subscribeOpportunity = asyncHandler(async (req, res) => {
+
+    req.body.id = uuidv4();
+
+    const {
+        id,
+        startDate,
+        initiatedBy,
+        providerId,
+        beneficiaryId
+    } = req.body;
+
+    let opportunityId = req.params.id;
+    console.log("Opportunity ID: ", opportunityId);
+
+    const dbClass = require("../utils/dbPromises");
 	let db = new dbClass(req.db);
-    
-    let today = moment().format('YYYY-MM-DD');
-    console.log("Today: ", today);
-
-	const sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES" WHERE STARTDATE > '2020-08-06'`;
+	
+	let sql = `UPDATE "DEMO_OPPORTUNITY" SET "STATE" = 'subscribed', "ACTIVITY_ID" = '${id}' WHERE "ID" = ?`;
 	console.log(sql);
 	
-	const statement = await db.preparePromisified(sql);
-    
-    
-	const results = await db.statementExecPromisified(statement, []);
+	let statement = await db.preparePromisified(sql);
 	
-	res.status(200).json({success: true, data: results});
-			
-});
+    await db.statementExecPromisified(statement, [opportunityId]);
+    
+    sql = `INSERT INTO "DEMO_ACTIVITY" 
+        ("ID", "ACTIVITYDATE", "INITIATEDBY", "PROVIDER_ID", "BENEFICIARY_ID", "OPPORTUNITY_ID")
+        VALUES (?, ?, ?, ?, ?, ?)`;
+    console.log(sql);
+
+    statement = await db.preparePromisified(sql);
+	
+    await db.statementExecPromisified(statement, [id, startDate, initiatedBy, providerId, beneficiaryId, opportunityId]);
+	
+	res.status(200).json({success: true, data: {}});
+})
 
 
 
@@ -62,14 +87,14 @@ exports.getFutureOpportunities = asyncHandler(async (req, res) => {
 // @route	POST /api/v1/opportunities
 // @access	Private
 exports.addOpportunity = asyncHandler(async (req, res) => {
-		
+
     req.body.id = uuidv4();
-    
+
     const {
-		id,
-		beneficiaryId,
-		categoryId,
-		description,
+        id,
+        beneficiaryId,
+        categoryId,
+        description,
         startDate,
         endDate,
         estimatedHours,
@@ -79,18 +104,18 @@ exports.addOpportunity = asyncHandler(async (req, res) => {
 
     console.log(req.body);
 
-	const dbClass = require("../utils/dbPromises");
-	let db = new dbClass(req.db);
-	
+    const dbClass = require("../utils/dbPromises");
+    let db = new dbClass(req.db);
+
     const sql = `INSERT INTO "DEMO_OPPORTUNITY" 
             ("ID", "BENEFICIARY_ID", "CATEGORY_ID", "DESCRIPTION", "STARTDATE", "ENDDATE", "ESTIMATEDHOURS", "ADDITIONALCOMMENTS", "DIFFICULTYLEVEL") 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-	console.log(sql);
-	
-	const statement = await db.preparePromisified(sql);
-	
-	await db.statementExecPromisified(statement, [id, beneficiaryId, categoryId, description, startDate, endDate, estimatedHours, additionalComments, difficultyLevel]);
-	
-	res.status(201).json({success: true, message: "Successfully added opportunity to database..."});
-	
+    console.log(sql);
+
+    const statement = await db.preparePromisified(sql);
+
+    await db.statementExecPromisified(statement, [id, beneficiaryId, categoryId, description, startDate, endDate, estimatedHours, additionalComments, difficultyLevel]);
+
+    res.status(201).json({ success: true, message: "Successfully added opportunity to database..." });
+
 });

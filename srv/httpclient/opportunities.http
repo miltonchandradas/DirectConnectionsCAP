@@ -1,5 +1,5 @@
 ### Get All Opportunities
-GET {{url}}/api/v1/opportunities
+GET {{url}}/api/v1/opportunities?active=true
 
 
 ### POST Opportunity
@@ -8,7 +8,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "beneficiaryId": "c050990c-2167-496d-9f39-c911ac960af3",
+    "beneficiaryId": "3a48c513-1a33-4509-bc8b-4cecaa9eb143",
     "categoryId": 2,
     "description": "description goes here...",
     "startDate": "2020-07-25T00:00:00.000Z",
@@ -16,5 +16,19 @@ Authorization: Bearer {{token}}
     "estimatedHours": 2,
     "additionalComments": "additional comments go here...",
     "difficultyLevel": 3
+}
+
+
+### PUT Opportunity
+PUT {{url}}/api/v1/opportunities/60880c51-e993-4b14-86c3-b8fc4f210ed5
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "providerId": "3a48c513-1a33-4509-bc8b-4cecaa9eb143",
+    "beneficiaryId": "c518be09-08a7-41bb-a32d-690ed6e5046a",
+    "startDate": "2020-08-06T00:00:00.000Z",
+    "endDate": "2020-08-06T00:00:00.000Z",
+    "initiatedBy": "volunteer"
 }
 

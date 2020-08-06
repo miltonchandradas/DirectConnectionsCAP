@@ -81,3 +81,44 @@ exports.addService = asyncHandler(async (req, res) => {
 	res.status(201).json({success: true, message: "Successfully added service to database..."});
 	
 });
+
+
+// @desc    Subscribe to services
+// @route   PUT /api/v1/services
+// @access  Private
+exports.subscribeService = asyncHandler(async (req, res) => {
+
+    req.body.id = uuidv4();
+
+    const {
+        id,
+        startDate,
+        initiatedBy,
+        providerId,
+        beneficiaryId
+    } = req.body;
+
+    let serviceId = req.params.id;
+    console.log("Service ID: ", serviceId);
+
+    const dbClass = require("../utils/dbPromises");
+	let db = new dbClass(req.db);
+	
+	let sql = `UPDATE "DEMO_SERVICE" SET "STATE" = 'subscribed', "ACTIVITY_ID" = '${id}' WHERE "ID" = ?`;
+	console.log(sql);
+	
+	let statement = await db.preparePromisified(sql);
+	
+    await db.statementExecPromisified(statement, [serviceId]);
+    
+    sql = `INSERT INTO "DEMO_ACTIVITY" 
+        ("ID", "ACTIVITYDATE", "INITIATEDBY", "PROVIDER_ID", "BENEFICIARY_ID", "SERVICE_ID")
+        VALUES (?, ?, ?, ?, ?, ?)`;
+    console.log(sql);
+
+    statement = await db.preparePromisified(sql);
+	
+    await db.statementExecPromisified(statement, [id, startDate, initiatedBy, providerId, beneficiaryId, serviceId]);
+	
+	res.status(200).json({success: true, data: {}});
+})

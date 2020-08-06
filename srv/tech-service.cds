@@ -2,8 +2,6 @@ using {demo} from '../db/schema';
 
 service TechService {
     
-    /* entity Suppliers as select from demo.Suppliers; */
-
     entity Users as select from demo.User {*} excluding { coordinates, isochrone5mCar };
 
     entity Categories as select from demo.Category;
@@ -20,10 +18,11 @@ service TechService {
         category.name as categoryName
     };
 
-    /* entity Products as select from demo.Product {*,
+    entity Activities as Select from demo.Activity {*,
         provider.firstName as providerFirstName,
         provider.lastName as providerLastName,
-        category.name as categoryName
-    }; */
+        beneficiary.firstName as beneficiaryFirstName,
+        beneficiary.lastName as beneficiaryLastName
+    };
 
 };
