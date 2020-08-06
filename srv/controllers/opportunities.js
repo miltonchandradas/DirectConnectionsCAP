@@ -1,4 +1,5 @@
 const asyncHandler = require("../middleware/async");
+const moment = require("moment");
 const { v4: uuidv4 } = require("uuid");
 
 /**
@@ -20,6 +21,35 @@ exports.getOpportunities = asyncHandler(async (req, res) => {
 	
 	const statement = await db.preparePromisified(sql);
 	
+	const results = await db.statementExecPromisified(statement, []);
+	
+	res.status(200).json({success: true, data: results});
+			
+});
+
+/**
+ * @swagger
+ * /api/v1/auth/categories:
+ *    get:
+ *      description: Get future volunteering categories
+ *    responses:
+ *      -  '200':
+ *          description: Get future volunteering categories
+ */
+exports.getFutureOpportunities = asyncHandler(async (req, res) => {
+
+	const dbClass = require("../utils/dbPromises");
+	let db = new dbClass(req.db);
+    
+    let today = moment().format('YYYY-MM-DD');
+    console.log("Today: ", today);
+
+	const sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES" WHERE STARTDATE > '2020-08-06'`;
+	console.log(sql);
+	
+	const statement = await db.preparePromisified(sql);
+    
+    
 	const results = await db.statementExecPromisified(statement, []);
 	
 	res.status(200).json({success: true, data: results});

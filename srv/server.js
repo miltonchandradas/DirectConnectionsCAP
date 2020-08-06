@@ -5,18 +5,18 @@ const express = require("express");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
-const colors = require("colors");
 const cors = require("cors");
 const errorHandler = require("./middleware/error");
 const xsHDBConn = require("@sap/hdbext");
 const xsenv = require("@sap/xsenv");
-const cds = require('@sap/cds');
+const cds = require("@sap/cds");
 const webpush = require("web-push");
-
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-
 const path = require("path");
+
+/*eslint-disable-next-line */
+const colors = require("colors");
 
 
 // Load environment variables
@@ -49,10 +49,11 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 const auth = require("./routes/auth");
 const categories = require("./routes/categories");
-const products = require("./routes/products");
+/* const products = require("./routes/products"); */
 const services = require("./routes/services");
 const opportunities = require("./routes/opportunities");
 const activities = require("./routes/activities");
+const ratings = require("./routes/ratings");
 const push = require("./routes/push");
 
 const app = express();
@@ -77,17 +78,21 @@ webpush.setVapidDetails(
     "mailto:test@test.com",
     process.env.PUBLIC_VAPID_KEY,
     process.env.PRIVATE_VAPID_KEY
-);
+); 
 
 // HANA connections
 app.use(xsHDBConn.middleware(hanaOptions.hana));
 
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/categories", categories);
-app.use("/api/v1/products", products);
+/* app.use("/api/v1/products", products); */
 app.use("/api/v1/services", services);
 app.use("/api/v1/opportunities", opportunities);
 app.use("/api/v1/activities", activities);
+app.use("/api/v1/ratings", ratings);
 app.use("/api/v1/push", push);
 
 // CAP CDS routes

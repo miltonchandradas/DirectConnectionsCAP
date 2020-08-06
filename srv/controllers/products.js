@@ -1,5 +1,4 @@
 const asyncHandler = require("../middleware/async");
-const ErrorResponse = require("../utils/errorResponse");
 const { v4: uuidv4 } = require("uuid");
 
 // @desc	Get all products

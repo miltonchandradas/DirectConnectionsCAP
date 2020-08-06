@@ -6,3 +6,6 @@ GET {{url}}/tech/Opportunities
 
 ### GET All Categories
 GET {{url}}/tech/Categories
+
+### GET All Users
+GET {{url}}/tech/Users

@@ -13,7 +13,7 @@ type veryLongString1000 : String(1000);
 type sDate : DateTime;
 type fourdigitDecimal : Decimal(15, 4);
 
-entity Products {
+/* entity Products {
     key id          : Integer;
         name        : String(100);
         description : String(1000);
@@ -32,7 +32,7 @@ entity Suppliers {
         address     : Address;
         products    : Association to many Products
                           on products.supplier = $self;
-}
+} */
 
 
 entity User {
@@ -60,8 +60,8 @@ entity User {
                                   on activityBeneficiary.beneficiary = $self;
         serviceProvider     : Association to many Service
                                   on serviceProvider.provider = $self;
-        productProvider     : Association to many Product
-                                  on productProvider.provider = $self;
+        /* productProvider     : Association to many Product
+                                  on productProvider.provider = $self; */
 }
 
 
@@ -75,8 +75,8 @@ entity Category {
                           on opportunity.category = $self;
         service     : Association to many Service
                           on service.category = $self;
-        product     : Association to many Product
-                          on product.category = $self;
+        /* product     : Association to many Product
+                          on product.category = $self; */
 }
 
 
@@ -105,7 +105,7 @@ entity Service {
         category           : Association to Category;
 }
 
-entity Product {
+/* entity Product {
     key id                 : mediumString50;
         description        : veryLongString1000 not null;
         price              : Decimal(6, 3);
@@ -114,18 +114,19 @@ entity Product {
         provider           : Association to User;
         activity           : Association to Activity;
         category           : Association to Category;
-}
+} */
 
 
 entity Activity {
     key id           : mediumString50;
         activityDate : sDate;
+        isComplete   : Boolean default false;
         rating       : Integer default null;
         provider     : Association to User;
         beneficiary  : Association to User;
         opportunity  : Association to Opportunity;
         service      : Association to Service;
-        product      : Association to Product;
+        /* product      : Association to Product; */
 
 }
 

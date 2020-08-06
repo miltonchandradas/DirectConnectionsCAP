@@ -34,23 +34,11 @@ exports.getActivities = asyncHandler(async (req, res) => {
 exports.addActivity = asyncHandler(async (req, res) => {
 		
     req.body.id = uuidv4();
-
-    /* entity Activity {
-    key id            : mediumString50;
-        opportunityId : mediumString50 not null;
-        activityDate  : sDate;
-        rating        : Integer default null;
-        provider      : Association to User;
-        beneficiary   : Association to User;
-
-
-} */
     
     const {
         id,
         opportunityId,
         activityDate,
-        rating,
         providerId,
 		beneficiaryId
     } = req.body;
@@ -67,7 +55,7 @@ exports.addActivity = asyncHandler(async (req, res) => {
 	
 	const statement = await db.preparePromisified(sql);
 	
-	const results = await db.statementExecPromisified(statement, [id, opportunityId, activityDate, rating, providerId, beneficiaryId]);
+	await db.statementExecPromisified(statement, [id, opportunityId, activityDate, providerId, beneficiaryId]);
 	
 	res.status(201).json({success: true, message: "Successfully added activity to database..."});
 	
