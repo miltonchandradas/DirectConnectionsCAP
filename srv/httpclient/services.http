@@ -2,12 +2,12 @@
 GET {{url}}/api/v1/services
 
 ### GET All Services for user
-GET {{url}}/api/v1/services?id=72f46ac0-6a48-4a88-88e0-9bc618705972
+GET {{url}}/api/v1/services?id=11539e8c-a4df-4337-8b9c-5c0474c854b4
 
 
 ### POST Service
 POST {{url}}/api/v1/services
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMwNTA5OTBjLTIxNjctNDk2ZC05ZjM5LWM5MTFhYzk2MGFmMyIsImZpcnN0TmFtZSI6Ik1pbHRvbiIsImxhc3ROYW1lIjoiQ2hhbmRyYWRhcyIsImVtYWlsIjoibWlsdG9uQGxpdmUuY29tIiwiaWF0IjoxNTkzODYwNDc3LCJleHAiOjE1OTY0NTI0Nzd9.gPid0Cz96BR9V2MGPFWDjMVTvlUYcvJWp8QAAz7x2QE
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 
-### PUT Service
+### PUT Subscribe to Service
 PUT {{url}}/api/v1/services/b3776886-39f8-4b96-aa50-a76e83ad1cf4
 Content-Type: application/json
 Authorization: Bearer {{token}}

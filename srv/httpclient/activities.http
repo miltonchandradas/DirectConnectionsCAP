@@ -1,0 +1,8 @@
+### PUT Activity
+PUT {{url}}/api/v1/activities/213998a2-92c0-4bd2-9f6e-748339953d3d
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "rating": 5
+}

@@ -19,15 +19,27 @@ exports.getOpportunities = asyncHandler(async (req, res) => {
     let active = req.query.active;
     console.log("Active: ", active);
 
+    let userId = req.query.userId;
+    console.log("UserId: ", userId);
+
+    let self = req.query.self;
+    console.log("Self: ", self);
+
     let sql = "";
 
-    if (active === true) {
-        sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES"`;
-    } else {
+    if (active) {
         let today = moment().format('YYYY-MM-DD');
         console.log("Today: ", today);
 
-        sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES" WHERE STARTDATE > '${today}'`;
+        if (userId && self == "true") {
+            sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES" WHERE "STARTDATE" > '${today}' AND "BENEFICIARY_ID" = '${userId}'`;
+        } else if (userId && self == "false") {
+            sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES" WHERE "STARTDATE" > '${today}' AND "BENEFICIARY_ID" != '${userId}'`;
+        }  else {
+            sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES" WHERE "STARTDATE" > '${today}'`;
+        }      
+    } else {
+        sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES"`;
     }
 
     console.log(sql);
@@ -60,25 +72,35 @@ exports.subscribeOpportunity = asyncHandler(async (req, res) => {
     console.log("Opportunity ID: ", opportunityId);
 
     const dbClass = require("../utils/dbPromises");
-	let db = new dbClass(req.db);
-	
-	let sql = `UPDATE "DEMO_OPPORTUNITY" SET "STATE" = 'subscribed', "ACTIVITY_ID" = '${id}' WHERE "ID" = ?`;
-	console.log(sql);
-	
-	let statement = await db.preparePromisified(sql);
-	
+    let db = new dbClass(req.db);
+
+    let sql = `UPDATE "DEMO_OPPORTUNITY" SET "STATE" = 'subscribed', "ACTIVITY_ID" = '${id}' WHERE "ID" = ?`;
+    console.log(sql);
+
+    let statement = await db.preparePromisified(sql);
+
     await db.statementExecPromisified(statement, [opportunityId]);
-    
-    sql = `INSERT INTO "DEMO_ACTIVITY" 
-        ("ID", "ACTIVITYDATE", "INITIATEDBY", "PROVIDER_ID", "BENEFICIARY_ID", "OPPORTUNITY_ID")
-        VALUES (?, ?, ?, ?, ?, ?)`;
+
+    sql = 'SELECT * FROM "DEMO_ACTIVITY" WHERE "OPPORTUNITY_ID" = ?';
     console.log(sql);
 
     statement = await db.preparePromisified(sql);
-	
-    await db.statementExecPromisified(statement, [id, startDate, initiatedBy, providerId, beneficiaryId, opportunityId]);
-	
-	res.status(200).json({success: true, data: {}});
+
+    let results = await db.statementExecPromisified(statement, [opportunityId]);
+
+    if (results.length < 1) {
+
+        sql = `INSERT INTO "DEMO_ACTIVITY" 
+        ("ID", "ACTIVITYDATE", "INITIATEDBY", "PROVIDER_ID", "BENEFICIARY_ID", "OPPORTUNITY_ID")
+        VALUES (?, ?, ?, ?, ?, ?)`;
+        console.log(sql);
+
+        statement = await db.preparePromisified(sql);
+
+        await db.statementExecPromisified(statement, [id, startDate, initiatedBy, providerId, beneficiaryId, opportunityId]);
+    }
+
+    res.status(200).json({ success: true, data: {} });
 })
 
 

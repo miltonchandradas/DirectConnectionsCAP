@@ -158,7 +158,8 @@ exports.facebook = asyncHandler(async (req, res, next) => {
  */
 exports.register = asyncHandler(async (req, res) => {
 
-    const {
+    let {
+        id,
         firstName,
         lastName,
         email,
@@ -177,8 +178,11 @@ exports.register = asyncHandler(async (req, res) => {
 
     // const dbClass = require("../utils/dbPromises");
     let db = new dbClass(req.db);
-    let id = uuidv4();
 
+    if (!id) {
+        id = uuidv4();
+    }
+    
     let sql =
         `INSERT INTO "DEMO_USER" ("ID", "FIRSTNAME", "LASTNAME", "EMAIL", "PASSWORD", "FORMATTEDADDRESS", "ISOCHRONE5MCAR", "COORDINATES", "LONGITUDE", "LATITUDE") VALUES(?, ?, ?, ?, ?, ?, ST_GEOMFROMGEOJSON('${polygons}', 4326), new ST_POINT(${location.coordinates[0]}, ${location.coordinates[1]}).ST_SRID(4326).ST_TRANSFORM(4326), ${location.coordinates[0]}, ${location.coordinates[1]})`;
     console.log(sql);

@@ -92,7 +92,6 @@ entity Activity {
         activityDate : sDate;
         initiatedBy  : mediumString50 default 'volunteer';
         state        : mediumString50 default 'subscribed';
-        isComplete   : Boolean default false;
         rating       : Integer default null;
         provider     : Association to User;
         beneficiary  : Association to User;

@@ -19,10 +19,14 @@ service TechService {
     };
 
     entity Activities as Select from demo.Activity {*,
+        service.description as serviceDescription,
+        opportunity.description as opportunityDescription,
         provider.firstName as providerFirstName,
         provider.lastName as providerLastName,
         beneficiary.firstName as beneficiaryFirstName,
         beneficiary.lastName as beneficiaryLastName
     };
+
+    entity CodeOfConduct as Select from demo.CodeOfConduct;
 
 };

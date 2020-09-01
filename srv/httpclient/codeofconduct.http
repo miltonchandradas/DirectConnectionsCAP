@@ -1,0 +1,2 @@
+### GET All Categories
+GET {{url}}/api/v1/conductcode

@@ -1,4 +1,5 @@
 const asyncHandler = require("../middleware/async");
+const moment = require("moment");
 const { v4: uuidv4 } = require("uuid");
 
 /**
@@ -16,27 +17,44 @@ const { v4: uuidv4 } = require("uuid");
  */
 exports.getServices = asyncHandler(async (req, res) => {
 
-    const id = req.query.id;
+    const dbClass = require("../utils/dbPromises");
+    let db = new dbClass(req.db);
 
-	const dbClass = require("../utils/dbPromises");
-	let db = new dbClass(req.db);
-    
+    let active = req.query.active;
+    console.log("Active: ", active);
+
+    let id = req.query.id;
+    console.log("UserId: ", id);
+
     let sql = "";
 
-    if (id) {
-        sql = `SELECT * FROM "TECHSERVICE_SERVICES" WHERE "PROVIDER_ID" = '${id}'`;
+    if (active) {
+        let today = moment().format('YYYY-MM-DD');
+        console.log("Today: ", today);
+
+        if (id) {
+            sql = `SELECT * FROM "TECHSERVICE_SERVICES" WHERE "STARTDATE" > '${today}' AND "PROVIDER_ID" = '${id}'`;
+        } else {
+            sql = `SELECT * FROM "TECHSERVICE_SERVICES" WHERE "STARTDATE" > '${today}'`;
+        }
+
+
     } else {
-        sql = `SELECT * FROM "TECHSERVICE_SERVICES"`;
+        if (id) {
+            sql = `SELECT * FROM "TECHSERVICE_SERVICES" WHERE "PROVIDER_ID" = '${id}'`;
+        } else {
+            sql = `SELECT * FROM "TECHSERVICE_SERVICES"`;
+        }
     }
 
-	console.log(sql);
-	
-	const statement = await db.preparePromisified(sql);
-	
-	const results = await db.statementExecPromisified(statement, []);
-	
-	res.status(200).json({success: true, data: results});
-			
+    console.log(sql);
+
+    const statement = await db.preparePromisified(sql);
+
+    const results = await db.statementExecPromisified(statement, []);
+
+    res.status(200).json({ success: true, data: results });
+
 });
 
 
@@ -61,25 +79,25 @@ exports.getServices = asyncHandler(async (req, res) => {
  *          description: Add new service
  */
 exports.addService = asyncHandler(async (req, res) => {
-	
-	console.log(req.body);
+
+    console.log(req.body);
     req.body.id = uuidv4();
     req.body.userId = req.user.id;
     req.body.email = req.user.email;
     req.body.address = req.user.formattedAddress;
 
-	const dbClass = require("../utils/dbPromises");
-	let db = new dbClass(req.db);
-	
-	const sql = `INSERT INTO "DEMO_SERVICES" VALUES (?)`;
-	console.log(sql);
-	
-	const statement = await db.preparePromisified(sql);
-	
-	await db.statementExecPromisified(statement, [JSON.stringify(req.body)]);
-	
-	res.status(201).json({success: true, message: "Successfully added service to database..."});
-	
+    const dbClass = require("../utils/dbPromises");
+    let db = new dbClass(req.db);
+
+    const sql = `INSERT INTO "DEMO_SERVICES" VALUES (?)`;
+    console.log(sql);
+
+    const statement = await db.preparePromisified(sql);
+
+    await db.statementExecPromisified(statement, [JSON.stringify(req.body)]);
+
+    res.status(201).json({ success: true, message: "Successfully added service to database..." });
+
 });
 
 
@@ -102,23 +120,35 @@ exports.subscribeService = asyncHandler(async (req, res) => {
     console.log("Service ID: ", serviceId);
 
     const dbClass = require("../utils/dbPromises");
-	let db = new dbClass(req.db);
-	
-	let sql = `UPDATE "DEMO_SERVICE" SET "STATE" = 'subscribed', "ACTIVITY_ID" = '${id}' WHERE "ID" = ?`;
-	console.log(sql);
-	
-	let statement = await db.preparePromisified(sql);
-	
+    let db = new dbClass(req.db);
+
+    let sql = `UPDATE "DEMO_SERVICE" SET "STATE" = 'subscribed', "ACTIVITY_ID" = '${id}' WHERE "ID" = ?`;
+    console.log(sql);
+
+    let statement = await db.preparePromisified(sql);
+
     await db.statementExecPromisified(statement, [serviceId]);
-    
-    sql = `INSERT INTO "DEMO_ACTIVITY" 
-        ("ID", "ACTIVITYDATE", "INITIATEDBY", "PROVIDER_ID", "BENEFICIARY_ID", "SERVICE_ID")
-        VALUES (?, ?, ?, ?, ?, ?)`;
+
+    sql = 'SELECT * FROM "DEMO_ACTIVITY" WHERE "SERVICE_ID" = ?';
     console.log(sql);
 
     statement = await db.preparePromisified(sql);
-	
-    await db.statementExecPromisified(statement, [id, startDate, initiatedBy, providerId, beneficiaryId, serviceId]);
-	
-	res.status(200).json({success: true, data: {}});
-})
+
+    let results = await db.statementExecPromisified(statement, [serviceId]);
+
+    if (results.length < 1) {
+
+        sql = `INSERT INTO "DEMO_ACTIVITY" 
+        ("ID", "ACTIVITYDATE", "INITIATEDBY", "PROVIDER_ID", "BENEFICIARY_ID", "SERVICE_ID")
+        VALUES (?, ?, ?, ?, ?, ?)`;
+        console.log(sql);
+
+        statement = await db.preparePromisified(sql);
+
+        await db.statementExecPromisified(statement, [id, startDate, initiatedBy, providerId, beneficiaryId, serviceId]);
+
+    }
+
+    res.status(200).json({ success: true, data: {} });
+
+});

@@ -1,5 +1,14 @@
 ### Get All Opportunities
+GET {{url}}/api/v1/opportunities
+
+### Get All Opportunities
 GET {{url}}/api/v1/opportunities?active=true
+
+### Get All Opportunities
+GET {{url}}/api/v1/opportunities?active=true&userId=8333b764-8252-4e16-ab4a-34163af0d61f&self=false
+
+### Get All Opportunities
+GET {{url}}/api/v1/opportunities?active=true&userId=8333b764-8252-4e16-ab4a-34163af0d61f&self=true
 
 
 ### POST Opportunity
@@ -19,13 +28,13 @@ Authorization: Bearer {{token}}
 }
 
 
-### PUT Opportunity
+### PUT Subscribe to Opportunity
 PUT {{url}}/api/v1/opportunities/60880c51-e993-4b14-86c3-b8fc4f210ed5
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "providerId": "3a48c513-1a33-4509-bc8b-4cecaa9eb143",
+    "providerId": "a741d85b-d6db-4b3b-b871-79acf9ef52cb",
     "beneficiaryId": "c518be09-08a7-41bb-a32d-690ed6e5046a",
     "startDate": "2020-08-06T00:00:00.000Z",
     "endDate": "2020-08-06T00:00:00.000Z",

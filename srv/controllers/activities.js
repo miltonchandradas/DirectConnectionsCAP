@@ -13,9 +13,19 @@ const { v4: uuidv4 } = require("uuid");
 exports.getActivities = asyncHandler(async (req, res) => {
 
 	const dbClass = require("../utils/dbPromises");
-	let db = new dbClass(req.db);
-	
-	const sql = `SELECT * FROM "DEMO_ACTIVITY"`;
+    let db = new dbClass(req.db);
+    
+    let userId = req.query.id;
+    console.log("User Id: ", userId);
+    
+    let sql = "";
+
+    if (userId) {
+        sql = `SELECT * FROM "TECHSERVICE_ACTIVITIES" WHERE "PROVIDER_ID" = '${userId}' OR "BENEFICIARY_ID" = '${userId}'`;
+    } else {
+        sql = `SELECT * FROM "TECHSERVICE_ACTIVITIES"`;
+    }
+ 
 	console.log(sql);
 	
 	const statement = await db.preparePromisified(sql);
@@ -79,7 +89,8 @@ exports.updateRating = asyncHandler(async (req, res) => {
 	let db = new dbClass(req.db);
 	
     const sql = `UPDATE "DEMO_ACTIVITY" 
-            SET "RATING" = ?
+            SET "RATING" = ?, 
+            "STATE" = 'completed'
             WHERE "ID" = '${activityId}'`;
 	console.log(sql);
 	

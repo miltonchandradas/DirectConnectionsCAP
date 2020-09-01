@@ -34,8 +34,8 @@ const swaggerOptions = {
     swaggerDefinition: {
         info: {
             version: "1.0.0",
-            title: "Direct Connections REST API",
-            description: "Direct Connections REST API - Innovator Challenge 2020",
+            title: "Helpful Heroes REST API",
+            description: "Helpful Heroes REST API - Innovator Challenge 2020",
             contact: {
                 name: "Team 209"
             },
@@ -53,6 +53,7 @@ const services = require("./routes/services");
 const opportunities = require("./routes/opportunities");
 const activities = require("./routes/activities");
 const ratings = require("./routes/ratings");
+const conductcode = require("./routes/conductcode");
 const push = require("./routes/push");
 
 const app = express();
@@ -91,6 +92,7 @@ app.use("/api/v1/services", services);
 app.use("/api/v1/opportunities", opportunities);
 app.use("/api/v1/activities", activities);
 app.use("/api/v1/ratings", ratings);
+app.use("/api/v1/conductcode", conductcode);
 app.use("/api/v1/push", push);
 
 // CAP CDS routes
