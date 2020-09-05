@@ -90,7 +90,7 @@ entity Service {
 entity Activity {
     key id           : mediumString50;
         activityDate : sDate;
-        initiatedBy  : mediumString50 default 'volunteer';
+        initiatedBy  : mediumString50 default 'provider';
         state        : mediumString50 default 'subscribed';
         rating       : Integer default null;
         provider     : Association to User;

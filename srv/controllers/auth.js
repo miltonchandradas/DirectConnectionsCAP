@@ -96,7 +96,7 @@ exports.facebook = asyncHandler(async (req, res, next) => {
 
     const statement = await db.preparePromisified(sql);
 
-    const results = await db.statementExecPromisified(statement, [req.user.email]);
+    const results = await db.statementExecPromisified(statement, [req.user.EMAIL]);
 
     console.log(results);
 

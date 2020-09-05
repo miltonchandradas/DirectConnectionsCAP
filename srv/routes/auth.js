@@ -28,7 +28,8 @@ router
 
 router
 	.route("/register")
-	.post(register);
+    .post(register);
+    
 
 router
 	.route("/login")
