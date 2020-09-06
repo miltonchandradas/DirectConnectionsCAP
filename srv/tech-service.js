@@ -16,15 +16,23 @@ module.exports = srv => {
 
     srv.on("getTop5ProviderMatches", async req => {
 
-        const { beneficiaryId } = req.data;
-        // console.log("Beneficiary ID: ", beneficiaryId);
+        const { opportunityId } = req.data;
+        console.log("Opportunity ID: ", opportunityId);
 
         const db = srv.transaction(req);
 
-        let { Users, Activities } = srv.entities;
+        let { Users, Opportunities, Activities } = srv.entities;
 
         let results = await db.read(Users, ["id", "firstName", "lastName", "email", "formattedAddress", "latitude", "longitude", "karmaPoints", "category.id as categoryId", "category.name as categoryName"]);
         let activities = await db.read(Activities);
+        let opportunities = await db.read(Opportunities, ["id", "category.id as categoryId", "category.name as categoryName", "beneficiary.id as beneficiaryId"]).where({ id: opportunityId });
+
+        let beneficiaryId = opportunities[0].beneficiary.beneficiaryId;
+        let category = opportunities[0].category.categoryId;
+        let categoryName = opportunities[0].category.categoryName;
+        console.log("Beneficiary ID: ", beneficiaryId);
+        console.log("Cateogry: ", category);
+        console.log("Category ID: ", categoryName);
 
         let users = results.map(result => {
 
@@ -70,7 +78,7 @@ module.exports = srv => {
             let distancePoints = 0;
             let karmaPoints = 0;
 
-            let categoryPoints = user.category === benefactor.category ? 10 : 3;
+            let categoryPoints = user.category === category ? 10 : 3;
 
             if (user.karmaPoints > 3000) {
                 karmaPoints = 25;
@@ -129,7 +137,7 @@ module.exports = srv => {
         
         return top5Providers.map((provider, index) => {
             return {ranking: index + 1, ...provider}
-        });
+        }); 
 
     });
 

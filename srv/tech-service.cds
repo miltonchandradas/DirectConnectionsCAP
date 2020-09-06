@@ -62,6 +62,6 @@ service TechService {
 
     function getDistanceToProvider(beneficiaryId: String) returns array of distanceResult;
 
-    function getTop5ProviderMatches(beneficiaryId: String) returns array of providersResult;
+    function getTop5ProviderMatches(opportunityId: String) returns array of providersResult;
 
 };

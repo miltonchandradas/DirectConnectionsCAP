@@ -80,21 +80,33 @@ exports.getServices = asyncHandler(async (req, res) => {
  */
 exports.addService = asyncHandler(async (req, res) => {
 
-    console.log(req.body);
     req.body.id = uuidv4();
-    req.body.userId = req.user.id;
-    req.body.email = req.user.email;
-    req.body.address = req.user.formattedAddress;
+
+    const {
+        id,
+        providerId,
+        categoryId,
+        description,
+        startDate,
+        endDate,
+        estimatedHours,
+        additionalComments,
+        difficultyLevel
+    } = req.body;
+
+    console.log(req.body);
 
     const dbClass = require("../utils/dbPromises");
     let db = new dbClass(req.db);
 
-    const sql = `INSERT INTO "DEMO_SERVICES" VALUES (?)`;
+    const sql = `INSERT INTO "DEMO_SERVICE" 
+            ("ID", "PROVIDER_ID", "CATEGORY_ID", "DESCRIPTION", "STARTDATE", "ENDDATE", "ESTIMATEDHOURS", "ADDITIONALCOMMENTS", "DIFFICULTYLEVEL") 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     console.log(sql);
 
     const statement = await db.preparePromisified(sql);
 
-    await db.statementExecPromisified(statement, [JSON.stringify(req.body)]);
+    await db.statementExecPromisified(statement, [id, providerId, categoryId, description, startDate, endDate, estimatedHours, additionalComments, difficultyLevel]);
 
     res.status(201).json({ success: true, message: "Successfully added service to database..." });
 
