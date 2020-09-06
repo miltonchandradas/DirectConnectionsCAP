@@ -1,0 +1,6 @@
+### Get distance to Providers
+GET http://localhost:5000/tech/getDistanceToProvider(beneficiaryId='1100b07f-e203-43e5-9f0d-93f2e1a28cfb')
+
+
+### Get Top 5 Provider matches
+GET http://localhost:5000/tech/getTop5ProviderMatches(beneficiaryId='1100b07f-e203-43e5-9f0d-93f2e1a28cfb')

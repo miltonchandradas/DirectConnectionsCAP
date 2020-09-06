@@ -29,4 +29,39 @@ service TechService {
 
     entity CodeOfConduct as Select from demo.CodeOfConduct;
 
+    type distanceResult {
+        success: Boolean;
+        providerId: String;
+        providerName: String;
+        address: String;
+        distance: String;
+        mode: String;
+        duration: String;
+    }
+
+    type providersResult {
+        success: Boolean;
+        ranking: Integer;
+        points: Integer;
+        categoryPoints: Integer;
+        distancePoints: Integer;
+        previousRatingPoints: Integer;
+        karma: Integer;
+        providerId: String;
+        providerName: String;
+        email: String;
+        address: String;
+        latitude: Decimal(12, 9);
+        longitude: Decimal(12, 9);
+        distance: String;
+        mode: String;
+        duration: String;
+        karmaPoints: Integer;
+        category: String;
+    }
+
+    function getDistanceToProvider(beneficiaryId: String) returns array of distanceResult;
+
+    function getTop5ProviderMatches(beneficiaryId: String) returns array of providersResult;
+
 };
