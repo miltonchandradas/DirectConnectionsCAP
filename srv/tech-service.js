@@ -1,6 +1,8 @@
 /* eslint-disable-next-line */
 const colors = require("colors");
 const distance = require("google-distance");
+const cds = require("@sap/cds");
+const nodemailer = require("nodemailer");
 
 module.exports = srv => {
     /* srv.before("*", req => {
@@ -13,6 +15,46 @@ module.exports = srv => {
         return products.filter(product => product.status === "active");
     }); */
 
+
+    srv.on("sendEmailsToVolunteers", async req => {
+
+        const db = srv.transaction(req);
+
+        let { Users } = srv.entities;
+        let results = await db.read(Users, ["id", "firstName", "lastName", "email"]);
+
+        let { host, port, secure, auth} = cds.env.ethereal;
+
+        let subject = "Please refer your friends to Helpful Heroes";
+        let body = `Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, 
+                    sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est 
+                    Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et 
+                    dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut 
+                    labore et dolore magna aliquyam erat`;
+        
+        let transporter = nodemailer.createTransport({
+            host,
+            port,
+            secure,
+            auth
+        });
+
+        results.forEach(result => {
+            console.log("Sending email...");
+            let info = transporter.sendMail({
+                from: "admin@helpfulheroes.com",
+                to: result.email,
+                subject,
+                text: body,
+            });
+            
+        });
+
+        return {
+            success: true,
+            message: `Campaign emails sent to all users...`
+        } 
+    });
 
     srv.on("getTop5ProviderMatches", async req => {
 
@@ -78,35 +120,25 @@ module.exports = srv => {
             let distancePoints = 0;
             let karmaPoints = 0;
 
-            let categoryPoints = user.category === category ? 10 : 3;
+            let categoryPoints = user.category === category ? 10 : 4;
 
-            if (user.karmaPoints > 3000) {
-                karmaPoints = 25;
-            } else if (user.karmaPoints > 2500) {
-                karmaPoints = 20;
-            } else if (user.karmaPoints > 2000) {
-                karmaPoints = 15;
+            if (user.karmaPoints > 2000) {
+                karmaPoints = 12;
             } else if (user.karmaPoints > 1500) {
                 karmaPoints = 10;
             } else if (user.karmaPoints > 1000) {
-                karmaPoints = 5;
+                karmaPoints = 7;
             } else {
-                karmaPoints = 3;
+                karmaPoints = 5;
             }
 
             let previousRatingPoints = hasHelpedBefore(user, benefactor, activities);
 
-            if (user.duration.replace(" mins", "") < 5) {
-                distancePoints = 25;
-            } else if (user.duration.replace(" mins", "") < 10) {
-                distancePoints = 20;
-            } else if (user.duration.replace(" mins", "") < 15) {
-                distancePoints = 15;
-            } else if (user.duration.replace(" mins", "") < 20) {
-                distancePoints = 10;
-            } else if (user.duration.replace(" mins", "") < 25) {
-                distancePoints = 5;
-            } 
+            if (user.duration.replace(" mins", "") < 25) {
+                distancePoints = (25 - (user.duration.replace(" mins", "")));
+            } else {
+                distancePoints = 0;
+            }
 
             let points = distancePoints + previousRatingPoints + karmaPoints + categoryPoints;
 
@@ -240,7 +272,7 @@ module.exports = srv => {
         console.log("User Addresses: ", usersAddresses);
         console.log("Benefactor Address: ", benefactorAddress);
 
-        distance.apiKey = "AIzaSyD74q4uKq-APn2fCWG6KJCrsy7UPWvtf9E";
+        distance.apiKey = "AIzaSyAPtG0xoIaMzHOZJxeBV_ZY4dvtKWZ8j-k";
 
         return new Promise((resolve, reject) => {
             distance.get({

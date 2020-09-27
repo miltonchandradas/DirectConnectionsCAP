@@ -60,8 +60,16 @@ service TechService {
         category: String;
     }
 
+    type emailsResult {
+        success: Boolean;
+        message: String;
+    }
+
     function getDistanceToProvider(beneficiaryId: String) returns array of distanceResult;
 
     function getTop5ProviderMatches(opportunityId: String) returns array of providersResult;
+
+    function sendEmailsToVolunteers() returns emailsResult;
+
 
 };

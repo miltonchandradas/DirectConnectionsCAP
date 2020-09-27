@@ -33,17 +33,17 @@ exports.getServices = asyncHandler(async (req, res) => {
         console.log("Today: ", today);
 
         if (id) {
-            sql = `SELECT * FROM "TECHSERVICE_SERVICES" WHERE "STARTDATE" > '${today}' AND "PROVIDER_ID" = '${id}'`;
+            sql = `SELECT * FROM "TECHSERVICE_SERVICES" WHERE "STARTDATE" > '${today}' AND "PROVIDER_ID" = '${id}' ORDER BY "STARTDATE" desc`;
         } else {
-            sql = `SELECT * FROM "TECHSERVICE_SERVICES" WHERE "STARTDATE" > '${today}'`;
+            sql = `SELECT * FROM "TECHSERVICE_SERVICES" WHERE "STARTDATE" > '${today}' ORDER BY "STARTDATE" desc`;
         }
 
 
     } else {
         if (id) {
-            sql = `SELECT * FROM "TECHSERVICE_SERVICES" WHERE "PROVIDER_ID" = '${id}'`;
+            sql = `SELECT * FROM "TECHSERVICE_SERVICES" WHERE "PROVIDER_ID" = '${id}' ORDER BY "STARTDATE" desc`;
         } else {
-            sql = `SELECT * FROM "TECHSERVICE_SERVICES"`;
+            sql = `SELECT * FROM "TECHSERVICE_SERVICES" ORDER BY "STARTDATE" desc`;
         }
     }
 
@@ -147,17 +147,19 @@ exports.subscribeService = asyncHandler(async (req, res) => {
     statement = await db.preparePromisified(sql);
 
     let results = await db.statementExecPromisified(statement, [serviceId]);
+    let rating = Math.floor(Math.random() * 5) + 1;
+    let state = "subscribed";
 
     if (results.length < 1) {
 
         sql = `INSERT INTO "DEMO_ACTIVITY" 
-        ("ID", "ACTIVITYDATE", "INITIATEDBY", "PROVIDER_ID", "BENEFICIARY_ID", "SERVICE_ID")
-        VALUES (?, ?, ?, ?, ?, ?)`;
+        ("ID", "ACTIVITYDATE", "INITIATEDBY", "PROVIDER_ID", "BENEFICIARY_ID", "SERVICE_ID", "RATING", "STATE")
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
         console.log(sql);
 
         statement = await db.preparePromisified(sql);
 
-        await db.statementExecPromisified(statement, [id, startDate, initiatedBy, providerId, beneficiaryId, serviceId]);
+        await db.statementExecPromisified(statement, [id, startDate, initiatedBy, providerId, beneficiaryId, serviceId, rating, state]);
 
     }
 

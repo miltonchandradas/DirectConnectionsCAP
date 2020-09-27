@@ -32,11 +32,12 @@ exports.getOpportunities = asyncHandler(async (req, res) => {
         console.log("Today: ", today);
 
         if (userId && self == "true") {
-            sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES" WHERE "STARTDATE" > '${today}' AND "BENEFICIARY_ID" = '${userId}'`;
+            // sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES" WHERE "STARTDATE" > '${today}' AND "BENEFICIARY_ID" = '${userId}'`;
+            sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES" WHERE "BENEFICIARY_ID" = '${userId}' ORDER BY "STARTDATE" desc`;
         } else if (userId && self == "false") {
-            sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES" WHERE "STARTDATE" > '${today}' AND "BENEFICIARY_ID" != '${userId}'`;
+            sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES" WHERE "STARTDATE" > '${today}' AND "BENEFICIARY_ID" != '${userId}' ORDER BY "STARTDATE" desc`;
         }  else {
-            sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES" WHERE "STARTDATE" > '${today}'`;
+            sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES" WHERE "STARTDATE" > '${today}' ORDER BY "STARTDATE" desc`;
         }      
     } else {
         sql = `SELECT * FROM "TECHSERVICE_OPPORTUNITIES"`;
@@ -87,17 +88,19 @@ exports.subscribeOpportunity = asyncHandler(async (req, res) => {
     statement = await db.preparePromisified(sql);
 
     let results = await db.statementExecPromisified(statement, [opportunityId]);
+    let rating = Math.floor(Math.random() * 5) + 1;
+    let state = "subscribed";
 
     if (results.length < 1) {
 
         sql = `INSERT INTO "DEMO_ACTIVITY" 
-        ("ID", "ACTIVITYDATE", "INITIATEDBY", "PROVIDER_ID", "BENEFICIARY_ID", "OPPORTUNITY_ID")
-        VALUES (?, ?, ?, ?, ?, ?)`;
+        ("ID", "ACTIVITYDATE", "INITIATEDBY", "PROVIDER_ID", "BENEFICIARY_ID", "OPPORTUNITY_ID", "RATING", "STATE")
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
         console.log(sql);
 
         statement = await db.preparePromisified(sql);
 
-        await db.statementExecPromisified(statement, [id, startDate, initiatedBy, providerId, beneficiaryId, opportunityId]);
+        await db.statementExecPromisified(statement, [id, startDate, initiatedBy, providerId, beneficiaryId, opportunityId, rating, state]);
     }
 
     res.status(200).json({ success: true, data: {} });
