@@ -65,7 +65,7 @@ module.exports = srv => {
 
         let { Users, Opportunities, Activities } = srv.entities;
 
-        let results = await db.read(Users, ["id", "firstName", "lastName", "email", "formattedAddress", "latitude", "longitude", "karmaPoints", "category.id as categoryId", "category.name as categoryName"]);
+        let results = await db.read(Users, ["id", "firstName", "lastName", "email", "formattedAddress", "isFacebookUser", "latitude", "longitude", "karmaPoints", "category.id as categoryId", "category.name as categoryName"]);
         let activities = await db.read(Activities);
         let opportunities = await db.read(Opportunities, ["id", "category.id as categoryId", "category.name as categoryName", "beneficiary.id as beneficiaryId"]).where({ id: opportunityId });
 
@@ -84,6 +84,7 @@ module.exports = srv => {
                 isBenefactor: result.id === beneficiaryId,
                 email: result.email,
                 address: result.formattedAddress,
+                isFacebookUser: result.isFacebookUser,
                 latitude: result.latitude,
                 longitude: result.longitude,
                 karmaPoints: result.karmaPoints,
@@ -93,9 +94,9 @@ module.exports = srv => {
 
         });
 
-        let benefactors = users.filter(user => user.isBenefactor);
+        let benefactors = users.filter(user => user.isBenefactor && !user.isFacebookUser);
         let benefactor = benefactors[0];
-        users = users.filter(user => !user.isBenefactor);
+        users = users.filter(user => !user.isBenefactor && !user.isFacebookUser);
 
         // console.log("Users: ", users);
         // console.log("Benefactor: ", benefactor);

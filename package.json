@@ -35,7 +35,8 @@
     },
     "scripts": {
         "db": "npx cds run",
-        "start": "node srv/server",
+        "start": "npx cds run",
+        "startmodified": "node srv/server",
         "dev": "cds deploy --to hana && nodemon srv/server",
         "doc": "jsdoc -c jsdoc.json",
         "middleware": "nodemon srv/server"

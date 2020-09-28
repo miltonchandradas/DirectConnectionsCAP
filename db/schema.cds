@@ -23,7 +23,7 @@ entity User {
         isFacebookUser      : Boolean default false;
         fbId                : mediumString50;
         isAdmin             : Boolean default false;
-        photoUrl            : longString100;
+        photoUrl            : veryLongString1000;
         karmaPoints         : Integer default 100;
         formattedAddress    : longString100;
         latitude            : Decimal(12, 9);

@@ -44,7 +44,7 @@ passport.use(
 					return done(null, results[0]);
 
 				sql =
-					`INSERT INTO "DEMO_USER" ("ID", "FBID", "FIRSTNAME", "LASTNAME", "EMAIL", "ISFACEBOOKUSER") VALUES(?, ?, ?, ?, ?, true)`;
+					`INSERT INTO "DEMO_USER" ("ID", "FBID", "FIRSTNAME", "LASTNAME", "EMAIL", "PHOTOURL", "ISFACEBOOKUSER") VALUES(?, ?, ?, ?, ?, ?, true)`;
 				console.log(sql);
 
 				statement = await db.preparePromisified(sql);
@@ -52,10 +52,13 @@ passport.use(
 				console.log("id", profile.id);
 				console.log("id", profile.name.givenName);
 				console.log("id", profile.name.familyName);
-				console.log("id", profile.emails[0].value);
+                console.log("id", profile.emails[0].value);
+
+                let facebookPhotoUrl = `https://graph.facebook.com/v2.6/${profile.id}/picture?type=large&access_token=${accessToken}`;
+                console.log("photo Url", facebookPhotoUrl);
 
 				results = await db.statementExecPromisified(statement, [id, profile.id, profile.name.givenName, profile.name.familyName, profile.emails[
-					0].value]);
+					0].value, facebookPhotoUrl]);
 
 				sql = `SELECT * FROM "DEMO_USER" WHERE "EMAIL" = ?`;
 				console.log(sql);
