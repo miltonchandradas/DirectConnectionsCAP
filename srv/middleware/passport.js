@@ -40,8 +40,21 @@ passport.use(
 
 				console.log(results);
 
-				if (results[0])
-					return done(null, results[0]);
+				if (results[0]) {
+
+                    let sql = `UPDATE "DEMO_USER" SET "PHOTOURL" = ? WHERE "FBID" = ?`;
+                    console.log(sql);
+
+                    let statement = await db.preparePromisified(sql);
+
+                    let facebookPhotoUrl = `https://graph.facebook.com/v2.6/${profile.id}/picture?type=large&access_token=${accessToken}`;
+                    console.log("photo Url", facebookPhotoUrl);
+
+                    await db.statementExecPromisified(statement, [facebookPhotoUrl, profile.id]);
+                    
+                    return done(null, results[0]);
+                }
+					
 
 				sql =
 					`INSERT INTO "DEMO_USER" ("ID", "FBID", "FIRSTNAME", "LASTNAME", "EMAIL", "PHOTOURL", "ISFACEBOOKUSER") VALUES(?, ?, ?, ?, ?, ?, true)`;
